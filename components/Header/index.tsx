@@ -4,9 +4,20 @@ import styles from './Header.module.scss';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { AuthDialog } from '../AuthDialog';
 
 export const Header: React.FC = () => {
   const isAuth = true;
+
+  const [authVisible, setAuthVisible] = React.useState(false);
+
+  const openAuthDialog = () => {
+    setAuthVisible(true);
+  };
+
+  const closeAuthDialog = () => {
+    setAuthVisible(false);
+  };
 
   return (
     <header className={styles.header}>
@@ -31,7 +42,7 @@ export const Header: React.FC = () => {
           <div className={styles.actions}>
             <ul>
               {isAuth ? (
-                <li>
+                <li onClick={openAuthDialog}>
                   <LoginIcon />
                 </li>
               ) : (
@@ -48,6 +59,7 @@ export const Header: React.FC = () => {
           </div>
         </div>
       </div>
+      <AuthDialog onClose={closeAuthDialog} visible={authVisible} />
     </header>
   );
 };
