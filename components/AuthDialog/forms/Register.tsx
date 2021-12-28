@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { LoginFormSchema } from '../../../utils/validations';
-import { FormField } from '../../FormField';
+import { RegisterFormSchema } from '../../../utils/validations';
 import { Button } from '@material-ui/core';
+import { FormField } from '../../FormField';
 
 interface RegisterFormProps {
   onOpenLogin: () => void;
@@ -12,27 +12,36 @@ interface RegisterFormProps {
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenLogin }) => {
   const form = useForm({
     mode: 'onChange',
-    resolver: yupResolver(LoginFormSchema),
+    reValidateMode: 'onChange',
+    resolver: yupResolver(RegisterFormSchema),
   });
+
+  const onSubmit = (data: any) => console.log(data);
 
   return (
     <FormProvider {...form}>
       <h2 className="text-center mb-30">Регистрация</h2>
-      <form>
-        <FormField name="firstName" label="Имя" />
-        <FormField name="lastName" label="Фамилия" />
-        <FormField name="email" label="Почта" />
-        <FormField name="password" label="Пароль" />
-        <Button className="mb-30" type="submit" color="primary" variant="contained" fullWidth>
-          Войти
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField type="text" name="firstName" label="Имя" />
+        <FormField type="text" name="lastName" label="Фамилия" />
+        <FormField type="email" name="email" label="Почта" />
+        <FormField type="password" name="password" label="Пароль" />
+        <Button
+          className="mb-30"
+          type="submit"
+          color="primary"
+          variant="contained"
+          fullWidth
+          disabled={!form.formState.isValid}>
+          Регистрация
         </Button>
-      </form>
-      <div className="d-flex">
-        Есть аккаунт?
-        <div className="ml-10 cu-p" onClick={onOpenLogin}>
-          Войти
+        <div className="d-flex align-center">
+          Есть аккаунт?
+          <Button className="ml-20" onClick={onOpenLogin} color="primary" variant="text">
+            Войти
+          </Button>
         </div>
-      </div>
+      </form>
     </FormProvider>
   );
 };

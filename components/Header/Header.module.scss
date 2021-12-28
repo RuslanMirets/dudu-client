@@ -23,9 +23,11 @@
 .actions {
   ul {
     display: flex;
+    align-items: center;
     gap: 10px;
   }
   li {
+    display: flex;
     cursor: pointer;
   }
 }

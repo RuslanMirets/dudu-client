@@ -24,7 +24,7 @@ export const theme = createTheme({
     },
     MuiDialogContent: {
       root: {
-        padding: '20px'
+        padding: '40px 20px 20px'
       }
     },
     MuiButton: {

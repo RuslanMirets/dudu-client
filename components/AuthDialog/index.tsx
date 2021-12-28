@@ -1,4 +1,6 @@
 import { Dialog, DialogContent } from '@material-ui/core';
+import { DialogTitle, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import styles from './AuthDialog.module.scss';
 import { LoginForm } from './forms/Login';
@@ -14,6 +16,9 @@ export const AuthDialog: React.FC<AuthDialogProps> = ({ onClose, visible }) => {
 
   return (
     <Dialog open={visible} onClose={onClose} maxWidth="sm" fullWidth>
+      <IconButton onClick={onClose}>
+        <CloseIcon className="btn--close" />
+      </IconButton>
       <DialogContent>
         {formType === 'login' && <LoginForm onOpenRegister={() => setFormType('register')} />}
         {formType === 'register' && <RegisterForm onOpenLogin={() => setFormType('login')} />}
