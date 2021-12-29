@@ -5,11 +5,13 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AuthDialog } from '../AuthDialog';
-import { useAppSelector } from '../../redux/hooks';
-import { selectUserData } from '../../redux/slices/user';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { selectUserData, setUserData } from '../../redux/slices/user';
+import { destroyCookie } from 'nookies';
 
 export const Header: React.FC = () => {
   const userData = useAppSelector(selectUserData);
+  const dispatch = useAppDispatch();
 
   const [authVisible, setAuthVisible] = React.useState(false);
 
@@ -19,6 +21,18 @@ export const Header: React.FC = () => {
 
   const closeAuthDialog = () => {
     setAuthVisible(false);
+  };
+
+  React.useEffect(() => {
+    if (authVisible && userData) {
+      setAuthVisible(false);
+    }
+  }, [authVisible, userData]);
+
+  const logout = (data: any) => {
+    destroyCookie(null, 'authToken', null);
+    data = null;
+    dispatch(setUserData(data));
   };
 
   return (
@@ -48,7 +62,7 @@ export const Header: React.FC = () => {
                   <li>
                     <AccountCircleIcon />
                   </li>
-                  <li>
+                  <li onClick={logout}>
                     <LogoutIcon />
                   </li>
                 </>

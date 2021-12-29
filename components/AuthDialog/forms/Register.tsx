@@ -4,12 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterFormSchema } from '../../../utils/validations';
 import { Button } from '@material-ui/core';
 import { FormField } from '../../FormField';
-import { UserApi } from '../../../utils/api';
 import { CreateUserDto } from '../../../utils/api/types';
 import { setCookie } from 'nookies';
 import { Alert } from '@mui/material';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setUserData } from '../../../redux/slices/user';
+import { UserApi } from '../../../utils/api/user';
+import { Api } from '../../../utils/api';
 
 interface RegisterFormProps {
   onOpenLogin: () => void;
@@ -28,8 +29,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenLogin }) => {
 
   const onSubmit = async (dto: CreateUserDto) => {
     try {
-      const data = await UserApi.register(dto);
-      console.log(data);
+      const data = await Api().user.register(dto);
       setCookie(null, 'authToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
@@ -37,7 +37,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onOpenLogin }) => {
       setErrorMessage('');
       dispatch(setUserData(data));
     } catch (error: any) {
-      console.warn('Ошибка при регистрации', error);
+      console.warn('Register error', error);
       if (error.response) {
         setErrorMessage(error.response.data.message);
       }

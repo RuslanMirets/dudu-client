@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-// import { createWrapper } from 'next-redux-wrapper';
+import { createWrapper } from 'next-redux-wrapper';
 
 import { userReducer } from './slices/user';
 
@@ -23,4 +23,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-// export const wrapper = createWrapper<RootStore>(makeStore, { debug: true });
+export const wrapper = createWrapper<RootStore>(makeStore, { debug: true });
