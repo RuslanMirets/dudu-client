@@ -16,6 +16,9 @@ export const theme = createTheme({
       rounded: {
         borderRadius: 8,
       },
+      root: {
+        backgroundColor: 'rgb(253, 237, 237)',
+      },
     },
     MuiDialog: {
       paper: {
@@ -24,8 +27,9 @@ export const theme = createTheme({
     },
     MuiDialogContent: {
       root: {
-        padding: '40px 20px 20px'
-      }
+        padding: '40px 20px 20px',
+        backgroundColor: '#ffffff',
+      },
     },
     MuiButton: {
       root: {
