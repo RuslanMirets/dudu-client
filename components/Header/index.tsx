@@ -5,9 +5,11 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { AuthDialog } from '../AuthDialog';
+import { useAppSelector } from '../../redux/hooks';
+import { selectUserData } from '../../redux/slices/user';
 
 export const Header: React.FC = () => {
-  const isAuth = true;
+  const userData = useAppSelector(selectUserData);
 
   const [authVisible, setAuthVisible] = React.useState(false);
 
@@ -41,11 +43,7 @@ export const Header: React.FC = () => {
           </nav>
           <div className={styles.actions}>
             <ul>
-              {isAuth ? (
-                <li onClick={openAuthDialog}>
-                  <LoginIcon />
-                </li>
-              ) : (
+              {userData ? (
                 <>
                   <li>
                     <AccountCircleIcon />
@@ -54,6 +52,10 @@ export const Header: React.FC = () => {
                     <LogoutIcon />
                   </li>
                 </>
+              ) : (
+                <li onClick={openAuthDialog}>
+                  <LoginIcon />
+                </li>
               )}
             </ul>
           </div>
